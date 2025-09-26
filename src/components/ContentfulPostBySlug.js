@@ -1,13 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { getBlogPostBySlug } from "../lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import LoadingSpinner from "./ui/LoadingSpinner";
 import Link from "next/link";
 import moment from "moment";
+import LoginButton from "./LoginButton";
 
 export default function ContentfulPostBySlug({ slug }) {
+  const { data: session, status } = useSession();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,6 +23,18 @@ export default function ContentfulPostBySlug({ slug }) {
     
     fetchPost();
   }, [slug]);
+
+  if (status === "loading") return <LoadingSpinner />;
+  
+  if (!session) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl text-white font-bold mb-8">Access Restricted</h1>
+        <p className="text-gray-300 mb-8">Please sign in to view this blog post</p>
+        <LoginButton />
+      </div>
+    );
+  }
 
   if (loading) return <LoadingSpinner />;
   if (!post) return <div className="text-center text-red-500">Post not found</div>;

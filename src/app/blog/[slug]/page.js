@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 const ContentfulPostBySlug = dynamic(() => import("../../../components/ContentfulPostBySlug"), {
   ssr: false,
-  loading: () => <div>Loading...</div>
+  loading: () => <div className="flex justify-center items-center min-h-screen text-white">Loading...</div>
 });
 
 export default function BlogPost({ params }) {
