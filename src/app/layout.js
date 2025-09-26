@@ -4,6 +4,9 @@ import Providers from "../components/Providers";
 export const metadata = {
   title: "My Blog",
   description: "A blog powered by Contentful",
+  icons: {
+    icon: "/favicon.jpg",
+  },
 };
 
 export default function RootLayout({ children }) {
