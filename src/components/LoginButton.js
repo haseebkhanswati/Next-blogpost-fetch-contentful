@@ -7,6 +7,13 @@ export default function LoginButton() {
   if (session) {
     return (
       <div className="flex items-center gap-4">
+        <img 
+          src={session.user.image}
+          alt={session.user.name}
+          referrerPolicy="no-referrer"
+          crossOrigin="anonymous"
+          className="w-10 h-10 rounded-full object-cover"
+        />
         <span className="text-white">Welcome, {session.user.name}</span>
         <button 
           onClick={() => signOut()}
